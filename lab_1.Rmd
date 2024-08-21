@@ -1,0 +1,10 @@
+---
+title: "lab_1"
+output: github_document
+---
+```{r}
+x=c(1,2,3)
+y=c(4,7,5)
+plot(x,y,xlab="x",ylab="y",main="plot",col="red",cex=4,pch=10)
+```
+

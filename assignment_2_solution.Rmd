@@ -1,0 +1,88 @@
+---
+title: "assignment_2_solution"
+output: github_document
+---
+
+```{r}
+# Q1a.Chest of coins with 20 gold, 30 silver and 50 bronze coins. 
+# You randomly draw 10 coins from this chest.
+chest <- c(rep("G",times=20),rep("S",times=30),rep("B",times=50))
+q1a<-sample(chest,10,replace=T)
+print(q1a)
+```
+
+```{r}
+# Q1b.In a surgical procedure, the chances of success and failure are 90% and 10% respectively. 
+# Generate a sample space for the next 10 surgical procedures performed.
+surgery <- c(T,F)
+q1b<-sample(surgery,10,replace=T,prob = c(0.9,0.1))
+print(q1b)
+```
+
+```{r}
+# Q2.A room has n people, and each has an equal chance of being born on any of the 365
+# days of the year. (For simplicity, we’ll ignore leap years). What is the probability
+# that two people in the room have the same birthday?
+N<-23 #No.of people in room
+probability1 <- 1-(choose(365,N)*factorial(N))/((365)^N)
+iterations<-1000 #no.of simulations
+sum=0
+for(val in 1:iterations){
+  birthdays <- sample(365, N, replace = TRUE)
+  sum <- sum + as.integer(any(duplicated(birthdays)))
+}
+probability_simulated <- sum/iterations
+print(paste("Probability that two people in the room have the same birthday = ",probability_simulated))
+```
+
+```{r}
+# Q3.suppose the probability of the weather being cloudy is 40%. Also suppose the probability 
+# of rain on a given day is 20% and that the probability of clouds on a rainy day is 85%. 
+# If it’s cloudy outside on a given day, what is the probability that it will rain that day?
+bayesTheorem <- function(pA,pB,pBA){
+  pAB <- pBA*pA/pB
+  return(pAB)
+}
+pCloud <- 0.4
+pRain <- 0.2
+pCloudyRain <- 0.85
+pRainCloud <- bayesTheorem(pRain, pCloud, pCloudyRain)
+print(paste("Probabilty of rain given cloudy day",pRainCloud))
+```
+
+```{r}
+# Q4.The iris dataset is a built-in dataset in R that contains measurements on 4 different
+# attributes (in centimeters) for 150 flowers from 3 different species.
+dat <- iris
+# Print first few rows of this dataset
+print(head(dat))
+# Find the structure of this dataset
+print(str(dat))
+# Find the range of the data regarding the sepal length of flowers.
+print(range(dat$Sepal.Length))
+# Find the mean of the sepal length.
+print(mean(dat$Sepal.Length))
+# Find the median of the sepal length.
+print(median(dat$Sepal.Length))
+# Find the first and the third quartiles and hence the interquartile range.
+print(quantile(dat$Sepal.Length, 0.25))
+print(quantile(dat$Sepal.Length, 0.75))
+print(IQR(dat$Sepal.Length))
+# Find the standard deviation and variance.
+print(lapply(dat[, 1:4], sd))
+# Try doing the above exercises for sepal.width, petal.length and petal.width.
+summary(iris)
+```
+
+```{r}
+# Q5.So we create a user function to calculate mode of a data set in R. 
+# This function takes the vector as input and gives the mode value as output.
+mode <- function(v){
+  u<-unique(v)
+  u[which.max(tabulate(match(v,u)))]
+}
+v<-c(2,1,2,3,1,2,3,4,1,5,5,3,2)
+m<-mode(v)
+print(paste("Mode=",m))
+```
+

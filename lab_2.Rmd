@@ -1,0 +1,64 @@
+---
+title: "lab_2"
+output: github_document
+---
+```{r}
+vec <- c(1,2,3,4)
+class(vec)
+char_vec <- c(1,2,3,"4")
+print(char_vec)
+class(char_vec)
+```
+
+```{r}
+#matrix declaration
+data <- c(1,2,3,4,5,6)
+m <- matrix(data)
+print(m)
+m <- matrix(data=data,nrow=3,ncol=2)
+print(m)
+# By row filling
+m <- matrix(data=data,nrow=3,ncol=2, byrow=T)
+print(m)
+
+# Matrix Access
+print(m[1,2])
+print(m[1,])
+print(m[,2])
+
+# Incrementing matrix by constant
+new_matrix <- m+5
+print(new_matrix)
+```
+
+```{r}
+# List all variables
+ls()
+
+# remove variable
+rm(char_vec)
+ls()
+```
+
+```{r}
+# Sequence command - to print elements in certain order, seq(start,end,step)
+seq(1,100)
+seq(1,10,0.5)
+
+# Repeat command - to repeat a specific command n times
+rep(seq(1,10), times=3)
+```
+
+```{r}
+# Set random seed generator to runif(iterations,start,end)
+set.seed(1)
+runif(10,100,200)
+
+# Round - rounding number, round(operation, place)
+set.seed(2)
+round(runif(10,100,200),2)
+
+# Integer entries only
+as.integer(runif(10,100,200))
+```
+
