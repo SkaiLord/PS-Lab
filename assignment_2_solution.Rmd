@@ -1,6 +1,8 @@
 ---
 title: "assignment_2_solution"
-output: github_document
+author: Sahir Khan
+date: August 11, 2024
+output: pdf_document
 ---
 
 ```{r}

@@ -1,6 +1,8 @@
 ---
 title: "lab_2"
-output: github_document
+author: Sahir Khan
+date: August 4, 2024
+output: pdf_document
 ---
 ```{r}
 vec <- c(1,2,3,4)

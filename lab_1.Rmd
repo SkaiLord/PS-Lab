@@ -1,6 +1,8 @@
 ---
 title: "lab_1"
-output: github_document
+author: Sahir Khan
+date: August 3, 2024
+output: pdf_document
 ---
 ```{r}
 x=c(1,2,3)
