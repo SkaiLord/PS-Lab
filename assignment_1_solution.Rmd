@@ -1,0 +1,104 @@
+---
+title: "assignment_1_solution"
+author: Sahir Khan
+date: August 11, 2024
+output: pdf_document
+---
+
+```{r}
+# Create a vector c = [5,10,15,20,25,30] and write a program 
+# which returns the maximum and minimum of this vector.
+num<-c(5,10,15,20,25,30)
+print('Original vector is:')
+print(num)
+print(paste('Minimum value of vector is : ',min(num)))
+print(paste('Maximum value of vector is : ',max(num)))
+```
+
+```{r}
+# Write a program in R to find factorial of a number by taking input from user. 
+# Please print error message if the input number is negative.
+num <- as.integer(readline(prompt="Enter a number: "))
+factorial <- 1
+if(num<0){
+  print('Sorry, factorial of this number doesnot exist')
+} else if(num==0){
+  print('Factorial of 0 is 1')
+} else{
+  for(i in 1:num){
+    factorial <- factorial*i
+  }
+  print(paste('Factorial of given number is:', factorial))
+}
+```
+
+```{r}
+# Write a program to write first n terms of a Fibonacci sequence. 
+# You may take n as an input from the user.
+num <- as.integer(readline(prompt="Enter a number: "))
+n1<-0
+n2<-1
+count<-2
+if(num<=0){
+  print('Please enter positive number')
+} else{
+  if(num==1){
+    print('Fibonacci Series:')
+    print(n1)
+  }
+  else{
+    print('Fibonacci Series:')
+    print(n1)
+    print(n2)
+    while(count<num){
+      nth <- n1+n2
+      print(nth)
+      n1<-n2
+      n2<-nth
+      count<-count+1
+    }
+  }
+}
+```
+```{r}
+# Write an R program to make a simple calculator which can add, 
+# subtract, multiply and divide.
+add <- function(x,y){
+  return(x+y)
+}
+subtract <- function(x,y){
+  return(x-y)
+}
+multiply <- function(x,y){
+  return(x*y)
+}
+divide <- function(x,y){
+  return(x/y)
+}
+print('Select operation:')
+print('1.Add')
+print('2.Subtract')
+print('3.Multiply')
+print('4.Divide')
+choice <- as.integer(readline(prompt='Enter the choice[1/2/3/4]: '))
+num1 <- as.integer(readline(prompt="Enter first number: "))
+num2 <- as.integer(readline(prompt="Enter second number: "))
+operator <- switch(choice,'+','-','*','/')
+result <- switch(choice, add(num1,num2), subtract(num1,num2),multiply(num1,num2),divide(num1,num2))
+print(paste(num1,operator,num2,'=',result))
+```
+
+```{r}
+# Explore plot, pie, barplot (the plotting options) which are built-in functions in R.
+x=c(1,2,3)
+y=c(4,7,5)
+plot(x,y,xlab="x",ylab="y",main="plot",col="red",cex=4,pch=10)
+
+categories <- c("Category 1", "Category 2", "Category 3")
+values <- c(25, 35, 40)
+
+pie(values, labels = categories, main = "Pie Chart")
+
+barplot(values, names.arg = categories, main = "Bar Plot", xlab = "Categories", ylab = "Values")
+```
+
