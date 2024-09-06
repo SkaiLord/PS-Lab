@@ -1,0 +1,101 @@
+---
+title: "assignment_3_solution"
+author: Sahir Khan
+date: Sept 2, 2024
+output: pdf_document
+---
+
+```{r}
+# Q1.Roll 12 dice simultaneously, and let X denotes the number of 6’s that appear.
+# Calculate the probability of getting 7, 8 or 9, 6’s using R. (Try using the function pbinom;
+# If we set S = {get a 6 on one roll}, P(S) = 1/6 and the rolls constitute Bernoulli 
+# trials; thus X = binom(size=12, prob=1/6) and we are looking for P(7 <= X <= 9).
+size<-12
+prob<-1/6
+p_to9<-pbinom(9,size,prob)
+p_to7<-pbinom(6,size,prob)
+p1<-p_to9-p_to7
+p1
+
+p_9<-dbinom(9,12,1/6)
+p_8<-dbinom(8,12,1/6)
+p_7<-dbinom(7,12,1/6)
+p2<-p_9+p_8+p_7
+p2
+
+p3<-diff(pbinom(c(6,9),size,prob))
+p3
+```
+
+```{r}
+# Q2.Assume that the test scores of a college entrance exam fits a normal distribution.
+# Furthermore, the mean test score is 72, and the standard deviation is 15.2. What is
+# the percentage of students scoring 84 or more in the exam?
+mean<-72
+sd<-15.2
+res<-pnorm(84,mean,sd,lower.tail=FALSE)
+res
+```
+
+```{r}
+# Q3.On the average, five cars arrive at a particular car wash every hour. Let X count the
+# number of cars that arrive from 10AM to 11AM, then X = Poisson(lamda = 5). What is
+# probability that no car arrives during this time. Next, suppose the car wash above
+# is in operation from 8AM to 6PM, and we let Y be the number of customers that
+# ppear in this period. Since this period covers a total of 10 hours, we get that Y =
+# Poisson(lamda = 5×10 = 50). What is the probability that there are between 48 and 50
+# customers, inclusive?
+p0<-dpois(0,5)
+p0
+
+lambda<-50
+p1<-ppois(50,lambda)-ppois(47,lambda)
+p1
+
+a<-diff(ppois(c(47,50),lambda))
+a
+```
+
+```{r}
+# Q4.Suppose in a certain shipment of 250 Pentium processors there are 17 defective processors. A
+# quality control consultant randomly collects 5 processors for inspection to determine whether 
+# or not they are defective. Let X denote the number of defectives in the sample. Find the probability 
+# of exactly 3 defectives in the sample, that is, find P(X = 3).
+n=250
+m=233
+k=5
+n=17
+h_1<-dhyper(3,17,233,5)
+h_1
+```
+
+```{r}
+# Q5.A recent national study showed that approximately 44.7% of college students have
+# used Wikipedia as a source in at least one of their term papers. Let X equal the
+# number of students in a random sample of size n = 31 who have used Wikipedia as a source.
+# a)How is X distributed? (b) Sketch the probability mass function. (c) Sketch the cumulative
+# distribution function. (d) Find mean, variance and standard deviation of X.
+x<-0:n
+prob<-0.447
+n<-31
+p0<-dbinom(x,n,prob)
+p0
+
+plot(p0)
+
+plot(x, p0, type = "h", lwd = 2, col = "blue",
+     xlab = "Number of Students Using Wikipedia",
+     ylab = "Probability",
+     main = "Probability Mass Function of X")
+
+
+cdfP<-pbinom(x,n,prob)
+plot(x,cdfP)
+
+mean_x=n*prob
+variance_x=n*prob*(1-prob)
+sd_x=sqrt(variance_x)
+mean_x
+variance_x
+sd_x
+```
