@@ -1,7 +1,7 @@
 ---
 title: "assignment_3_solution"
 author: Sahir Khan
-date: Sept 2, 2024
+date: September 2, 2024
 output: pdf_document
 ---
 
@@ -79,9 +79,7 @@ x<-0:n
 prob<-0.447
 n<-31
 p0<-dbinom(x,n,prob)
-p0
-
-plot(p0)
+print(data.frame(X=x,P.X=p0))
 
 plot(x, p0, type = "h", lwd = 2, col = "blue",
      xlab = "Number of Students Using Wikipedia",
@@ -90,7 +88,10 @@ plot(x, p0, type = "h", lwd = 2, col = "blue",
 
 
 cdfP<-pbinom(x,n,prob)
-plot(x,cdfP)
+plot(x,cdfP, type = "h", lwd = 2, col = "blue",
+     xlab = "Number of Students Using Wikipedia",
+     ylab = "Probability",
+     main = "Cumulative Distribution Function of X")
 
 mean_x=n*prob
 variance_x=n*prob*(1-prob)

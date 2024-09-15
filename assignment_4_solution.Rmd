@@ -1,7 +1,7 @@
 ---
 title: "assignment_4_solution"
 author: Sahir Khan
-date: Sept 6, 2024
+date: September 6, 2024
 output: pdf_document
 ---
 
@@ -39,7 +39,7 @@ print(ans)
 # Find the expected value of Y.
 x <- c(seq(0,3))
 px <- c(0.1,0.2,0.2,0.5)
-y <- (10*x-12)
+y <- (10*x+6)
 e <- sum(y*px)
 print(e)
 ```
@@ -69,6 +69,7 @@ print((paste("Value of variance", v)))
 # Write a function to find the probability distribution of the random variable 
 # Y = X^2 and find probability of Y for X = 3. Further, use it to find the 
 # expected value and variance of Y for X = 1,2,3,4,5.
+#Method 1
 f <- function(y){
   (3/4) * ((1/4)^(sqrt(y)-1))
 }
@@ -81,5 +82,46 @@ ey2 <- sum((y^2)*py)
 v <- ey2 - (ey1^2)
 print(paste("Mean of Y is ",ey1))
 print(paste("Variance of Y is ",v))
+```
+
+```{r}
+#Method 2
+# PMF of the geometric distribution for X
+f_x <- function(x) {
+  return((3/4) * (1/4)^(x-1))
+}
+
+# Function to compute Y = X^2 and the corresponding probabilities
+f_y <- function(x) {
+  y <- x^2  # Y = X^2
+  prob <- f_x(x)  # Probability of X
+  return(list(y = y, prob = prob))  # Return Y and its probability
+}
+
+# Compute probabilities for X = 1, 2, 3, 4, 5
+x_values <- 1:5  # Values of X
+y_probabilities <- lapply(x_values, f_y)
+
+# Convert the result into a data frame
+y_probs <- data.frame(
+  X = x_values, 
+  Y = sapply(y_probabilities, function(x) x$y),  # Extract Y values
+  Probability = sapply(y_probabilities, function(x) x$prob)  # Extract probabilities
+)
+
+# Print the table of probabilities
+print(y_probs)
+
+# Calculate the expected value E[Y]
+expected_value <- sum(y_probs$Y * y_probs$Probability)
+expected_square <- sum((y_probs$Y^2) * y_probs$Probability)
+
+# Calculate the variance Var(Y)
+variance <- expected_square - expected_value^2
+
+# Print the expected value and variance
+cat("Expected Value/Mean of Y:", expected_value, "\n")
+cat("Variance of Y:", variance, "\n")
+
 ```
 

@@ -35,6 +35,49 @@ for(val in 1:iterations){
 }
 probability_simulated <- sum/iterations
 print(paste("Probability that two people in the room have the same birthday = ",probability_simulated))
+
+p_birthday <- function(N) {
+  if (N > 365) {
+    return(1)  # More people than days, so there's definitely a shared birthday
+  }
+  
+  prob_no_shared <- 1
+  for (i in 1:(N-1)) {
+    prob_no_shared <- prob_no_shared * (365 - i) / 365
+  }
+  
+  prob_shared <- 1 - prob_no_shared  # The complement of no shared birthdays
+  return(prob_shared)
+}
+```
+```{r}
+# Q2.A room has n people, and each has an equal chance of being born on any of the 365
+# days of the year. (For simplicity, we’ll ignore leap years). What is the probability
+# that two people in the room have the same birthday?
+# Function to simulate the birthday problem
+birthday_simulation <- function(n, trials = 10000) {
+  same_birthday <- 0  # Counter for simulations where two people have the same birthday
+  
+  for (i in 1:trials) {
+    birthdays <- sample(1:365, n, replace = TRUE)  # Generate n random birthdays
+    if (length(unique(birthdays)) != n) {  # Check if there are duplicates
+      same_birthday <- same_birthday + 1
+    }
+  }
+  
+  # Estimate the probability
+  probability <- same_birthday / trials
+  return(probability)
+}
+
+# Simulate for different values of n
+n_values <- c(5, 10, 20, 30, 50, 100)
+probabilities <- sapply(n_values, birthday_simulation)
+
+# Display the results
+results <- data.frame(n = n_values, Probability = probabilities)
+print(results)
+
 ```
 
 ```{r}
