@@ -61,12 +61,12 @@ lines(density(sim_data), col = "darkblue", lwd = 2)
 alpha <- 2  # Shape parameter
 beta <- 1/3  # Rate parameter
 
-p_at_3 <- dgamma(3, shape = alpha, rate = beta)
+p_at_3 <- dgamma(3, shape = alpha, scale = beta)
 print(paste("Probability that the lifetime of 3 units: ",p_at_3 ))
-p_at_least_1 <- 1 - pgamma(1, shape = alpha, rate = beta)
+p_at_least_1 <- 1 - pgamma(1, shape = alpha, scale = beta)
 print(paste("Probability that the lifetime of at least 1 unit: ",p_at_least_1 ))
 
-c_value <- qgamma(0.70, shape = alpha, rate = beta)
+c_value <- qgamma(0.70, shape = alpha, scale = beta)
 print(paste("Value of c for P(X <= c) >= 0.70 : ",c_value))
 ```
 
