@@ -1,0 +1,72 @@
+---
+title: "assignment_5_solution"
+author: Sahir Khan
+date: October 7, 2024
+output: pdf_document
+---
+
+```{r}
+# Q1.Consider that X is the time (in minutes) that a person has to wait in order to 
+# take a flight. If each flight takes off each hour X = U(0, 60). 
+# Find the probability that (a) waiting time is more than 45 minutes, and 
+# (b) waiting time lies between 20 and 30 minutes.
+punif(45, min=0, max=60, lower.tail=FALSE)
+#or 1-punif(45, min=0, max=60)
+punif(30, min=0, max=60)-punif(20, min=0, max=60)
+```
+
+```{r}
+# Q2.The time (in hours) required to repair a machine is an exponential distributed 
+# random variable with parameter lambda = 1/2.
+# (a) Find the value of density function at x = 3.
+# (b) Plot the graph of exponential probability distribution for 0 <= x <= 5.
+# (c) Find the probability that a repair time takes at most 3 hours.
+# (d) Plot the graph of cumulative exponential probabilities for 0 <= x <= 5.
+# (e) Simulate 1000 exponential distributed random numbers with lambda = 1⁄2 and plot 
+# the simulated data.
+lambda <- 1/2 
+x <- 3
+f_x <- dexp(x, rate = lambda)
+print(paste("Density function at x=3, ",f_x))
+
+x_vals <- seq(0, 5, by = 0.01)
+pdf_vals <- dexp(x_vals, rate = lambda)
+plot(x_vals, pdf_vals, type = "l", col = "blue", lwd = 2, 
+     main = "Exponential PDF (lambda = 1/2)",
+     xlab = "x", ylab = "Density")
+
+print(paste("Probability that a repair time takes at most 3 hours: ",pexp(3, rate=1/2)))
+
+cdf_vals <- pexp(x_vals, rate = lambda)
+plot(x_vals, cdf_vals, type = "l", col = "red", lwd = 2, 
+     main = "Exponential CDF (lambda = 1/2)",
+     xlab = "x", ylab = "Cumulative Probability")
+
+n=1000
+sim_data <- rexp(n, rate = lambda)
+hist(sim_data, probability = TRUE, col = "lightblue", 
+     main = "Histogram of Simulated Exponential Data",
+     xlab = "x", breaks = 30)
+
+# Add the theoretical density line on top of the histogram
+lines(density(sim_data), col = "darkblue", lwd = 2)
+```
+
+```{r}
+# Q3.The lifetime of certain equipment is described by a random variable X that 
+# follows Gamma distribution with parameters alpha = 2 and beta = 1/3.
+# (a) Find the probability that the lifetime of equipment is (i) 3 units of time, 
+# and (ii) at least 1 unit of time.
+# (b) What is the value of c, if P(X <= c) >= 0.70? (Hint: qgamma())
+alpha <- 2  # Shape parameter
+beta <- 1/3  # Rate parameter
+
+p_at_3 <- dgamma(3, shape = alpha, rate = beta)
+print(paste("Probability that the lifetime of 3 units: ",p_at_3 ))
+p_at_least_1 <- 1 - pgamma(1, shape = alpha, rate = beta)
+print(paste("Probability that the lifetime of at least 1 unit: ",p_at_least_1 ))
+
+c_value <- qgamma(0.70, shape = alpha, rate = beta)
+print(paste("Value of c for P(X <= c) >= 0.70 : ",c_value))
+```
+
