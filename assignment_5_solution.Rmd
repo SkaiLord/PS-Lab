@@ -59,7 +59,7 @@ lines(density(sim_data), col = "darkblue", lwd = 2)
 # and (ii) at least 1 unit of time.
 # (b) What is the value of c, if P(X <= c) >= 0.70? (Hint: qgamma())
 alpha <- 2  # Shape parameter
-beta <- 1/3  # Rate parameter
+beta <- 1/3  # Scale parameter
 
 p_at_3 <- dgamma(3, shape = alpha, scale = beta)
 print(paste("Probability that the lifetime of 3 units: ",p_at_3 ))
