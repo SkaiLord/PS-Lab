@@ -1,0 +1,107 @@
+---
+title: "assignment_6_solution"
+author: Sahir Khan
+date: October 14, 2024
+output: pdf_document
+---
+
+```{r}
+# Q1.The joint probability density of two random variables X and Y is f(x,y)
+# Then write a R-code to
+# (i) check that it is a joint density function or not? (Use integral2()) 
+# (ii) find marginal distribution g(x) at x = 1.
+# (iii) find the marginal distribution h(y) at y = 0.
+# (iv) find the expected value of g(x, y) = xy.
+library(pracma)
+f <- function(x,y){
+  2*(2*x+3*y)/5
+}
+
+intg <- integral2(f,0,1,0,1)
+if (intg$Q == 1){
+  print("Function is joint density function")
+} else{
+  print("Function is not joint density function")
+}
+
+gx <- function(y){
+  f(1,y)
+}
+margX <- integrate(gx,0,1)
+print(paste("Marginal distribution g(x) at x = 1 : ",margX$value))
+
+gy <- function(x){
+  f(x,0)
+}
+margY <- integrate(gy,0,1)
+print(paste("Marginal distribution h(y) at y = 0 : ",margY$value))
+
+gxy <- function(x,y){
+  x*y*f(x,y)
+}
+expVal <- integral2(gxy,0,1,0,1)
+print(paste("Expected value of g(x, y) = xy : ",expVal$Q))
+```
+
+```{r}
+# Q2.The joint probability mass function of two random variables X and Y is 
+# f(x,y)={(x+y)/30; x=0,1,2,3; y=0,1,2} Then write a R-code to
+# (i) display the joint mass function in rectangular (matrix) form.
+# (ii) check that it is joint mass function or not? (use: Sum())
+# (iii) find the marginal distribution g(x) for x = 0, 1, 2, 3. (Use:apply())
+# (iv) find the marginal distribution h(y) for y = 0, 1, 2. (Use:apply())
+# (v) find the conditional probability at x = 0 given y = 1.
+# (vi) find E(x), E(y), E(xy), Var(x), Var(y), Cov(x, y) and its correln coeff
+f <- function(x,y){
+  (x+y)/30
+}
+pmf_matrix <- matrix(c(f(0,0:2),f(1,0:2),f(2,0:2),f(3,0:2)), 
+                     nrow = 4, byrow = TRUE)
+if (sum(pmf_matrix) == 1){
+  print("Function is joint mass function")
+} else{
+  print("Function is not joint mass function")
+}
+
+g_x <- apply(pmf_matrix, 1, sum)
+cat("Marginal distribution g(x) for x = 0, 1, 2, 3 :\n")
+print(g_x)
+
+h_y <- apply(pmf_matrix, 2, sum)
+cat("Marginal distribution h(y) for y = 0, 1, 2 :\n")
+print(h_y)
+
+P_X0_Y1 <- pmf_matrix[1,2]/h_y[2]
+print(paste("Conditional probability at x = 0 given y = 1 : ", P_X0_Y1))
+
+x_values <- 0:3
+y_values <- 0:2
+
+E_X <- sum(x_values * g_x)
+E_Y <- sum(y_values * h_y)
+print(paste("E(x): ", E_X))
+print(paste("E(y): ", E_Y))
+
+E_XY <- 0
+for (i in 1:4) {
+  for (j in 1:3) {
+    E_XY <- E_XY + x_values[i] * y_values[j] * pmf_matrix[i, j]
+  }
+}
+print(paste("E(xy): ", E_XY))
+
+E_X2 <- sum((x_values^2) * g_x)
+Var_X <- E_X2 - E_X^2
+print(paste("Var(x): ", Var_X))
+
+E_Y2 <- sum((y_values^2) * h_y)
+Var_Y <- E_Y2 - E_Y^2
+print(paste("Var(y): ", Var_Y))
+
+Cov_XY <- E_XY - E_X * E_Y
+print(paste("Cov(x,y): ", Cov_XY))
+
+Corr_XY <- Cov_XY / (sqrt(Var_X) * sqrt(Var_Y))
+print(paste("Corr(x,y): ", Corr_XY))
+```
+
