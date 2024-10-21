@@ -1,0 +1,123 @@
+---
+title: "assignment_7_solution"
+author: Sahir Khan
+date: October 21, 2024
+output: pdf_document
+---
+
+```{r}
+# Q1.Use the rt(n, df ) function in r to investigate the t-distribution for n = 100
+# and df = n-1 and plot the histogram for the same.
+n <- 100
+df <- n - 1
+t_values <- rt(n, df)
+
+hist(t_values, 
+     breaks = 15,             # Number of bins
+     main = "Histogram of t-distribution",
+     xlab = "t values", 
+     col = "lightblue", 
+     border = "black")
+```
+
+```{r}
+# Q2.Use the rchisq(n,df) function in r to investigate the chi-square distribution 
+# with n = 100 and df = 2, 10, 25.
+n <- 100
+chisq_df2 <- rchisq(n, df = 2)
+chisq_df10 <- rchisq(n, df = 10)
+chisq_df25 <- rchisq(n, df = 25)
+
+# Histogram for df = 2
+hist(chisq_df2, 
+     breaks = 15, 
+     main = "Chi-Square Distribution (df = 2)", 
+     xlab = "Values", 
+     col = "lightblue", 
+     border = "black")
+
+# Histogram for df = 10
+hist(chisq_df10, 
+     breaks = 15, 
+     main = "Chi-Square Distribution (df = 10)", 
+     xlab = "Values", 
+     col = "lightgreen", 
+     border = "black")
+
+# Histogram for df = 25
+hist(chisq_df25, 
+     breaks = 15, 
+     main = "Chi-Square Distribution (df = 25)", 
+     xlab = "Values", 
+     col = "lightcoral", 
+     border = "black")
+```
+
+```{r}
+# Q3.Generate a vector of 100 values between -6 and 6. Use the dt() function in 
+# r to find the values of a t-distribution given a random variable x and degrees 
+# of freedom 1,4,10,30. Using these values plot the density function for students
+# t-distribution with degrees of freedom 30. Also shows a comparison of 
+# probability density functions having different degrees of freedom (1,4,10,30).
+x <- seq(-6, 6, length.out = 100)
+df_values <- c(1, 4, 10, 30)
+colors <- c("red", "green", "purple", "blue")
+
+# Plot the density function for degrees of freedom = 30
+plot(x, dt(x, df = 30), type = "l", 
+     col = "blue", 
+     lwd = 2, 
+     main = "Student's t-distribution (df = 30)",
+     xlab = "x", 
+     ylab = "Density")
+
+# Initialize the plot with the first distribution (df = 1)
+plot(x, dt(x, df = df_values[1]), type = "l", 
+     col = colors[1], lwd = 2, 
+     ylim = c(0, max(dt(x, df = df_values[1]))), 
+     main = "Comparison of t-distribution PDFs", 
+     xlab = "x", ylab = "Density")
+
+# Loop through the degrees of freedom and add lines for each
+for (i in 2:length(df_values)) {
+  lines(x, dt(x, df = df_values[i]), col = colors[i], lwd = 2)
+}
+
+# Add a legend for clarification
+legend("topright", 
+       legend = paste("df =", df_values), 
+       col = colors, 
+       lwd = 2)
+```
+```{r}
+# Q4.Write a r-code
+# (i) To find the 95th percentile of the F-distribution with (10,20) degrees of freedom.
+# (ii) To calculate the area under the curve for the interval [0, 1.5] and the 
+#      interval [1.5, +inf) of a F-curve with v1 = 10 and v2 = 20 (USE pf()).
+# (iii) To calculate the quantile for a given area (= probability) under the 
+#       curve for a F-curve with v1 = 10 and v2 = 20 that corresponds to 
+#       q = 0.25, 0.5, 0.75 and 0.999. (use the qf ())
+# (iv) To generate 1000 random values from the F-distribution with v1 = 10 and 
+#      v2 = 20 (use rf())and plot a histogram.
+v1 <- 10
+v2 <- 20
+p <- 0.95
+percentile_95 <- qf(p, df1 = v1, df2 = v2)
+print(paste("95th percentile of F-distribution with (10,20) : ",percentile_95))
+
+
+area_0_1.5 <- pf(1.5, df1 = v1, df2 = v2)
+print(paste("Area under the curve for the interval [0, 1.5]: ",area_0_1.5))
+area_1.5_inf <- pf(1.5, df1 = v1, df2 = v2, lower.tail = FALSE)
+print(paste("Area under the curve for the interval [1.5, +inf): ",area_1.5_inf))
+
+prob <- c(0.25, 0.5, 0.75, 0.999)
+quantiles <- qf(prob, df1 = v1, df2 = v2)
+print(paste("Quantiles for given area under the curve for a F-curve with p=",
+            prob,"is",quantiles))
+
+random_values <- rf(1000, df1 = v1, df2 = v2)
+hist(random_values, breaks = 30, 
+     main = "Histogram of 1000 Random F-distribution Values",
+     xlab = "Values", col = "lightblue", border = "black")
+```
